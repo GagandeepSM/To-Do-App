@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}TODO{% endblock  %}
+
+{% block content  %}
+<div class="container">
+    <div class="row">
+
+      <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+        <div class="offcanvas-header">
+          <!-- <h5 id="offcanvasTopLabel">Add Item</h5> -->
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <form action="/" method="POST">
+            <div class="row">
+              <div class="mb-3">
+                <label for="task" class="form-label">Task</label>
+                <input type="text" class="form-control" name="task">
+              </div>
+              <div class="mb-3">
+                <label for="desc" class="form-label">Description</label>
+                <input type="text" class="form-control" name="desc">
+              </div>
+              <button type="submit" class="btn btn-primary">Add Task</button>
+  
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <nav class="col-2 navbar navbar-expand-lg bg-body-tertiary">
+          <ul class="nav flex-column">
+          <li class="nav-item">
+          <a class="nav-link active"  aria-current="page" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">Create</a>
+          </li>
+          <li class="nav-item">
+          <a class="nav-link" href="#">Update</a>
+          </li>
+          <li class="nav-item">
+          <a class="nav-link" href="#">Delete</a>
+          </li>
+          </ul>
+      </nav>  
+
+      <div class="col-10 text-center">
+          {% if allTodo|length == 0 %}
+          <div class="alert alert-info" role="alert">
+            No Record Found
+          </div>
+          {% else %}        
+          <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Task</th>
+                  <th scope="col">Desc</th>
+                  <th scope="col">Time</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for item in allTodo  %}
+                <tr>
+                  <th scope="row">{{loop.index}}</th>
+                  <td>{{item.task}}</td>
+                  <td>{{item.desc}}</td>
+                  <td>{{item.date}}</td>
+                  <td>
+                    <a href="/update/{{item.id}}"  type="button" class="btn btn-light btn-sm">Update</button>
+                    <a href="/delete/{{item.id}}"  type="button" class="btn btn-light btn-sm">Delete</button>
+                  </td>
+                </tr>
+                {% endfor %}                  
+                {% endif %}
+                
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>
+{% endblock  %} 
